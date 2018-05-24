@@ -1,8 +1,10 @@
-
 //LEFT SHARK REVENGE - red/blue fin added, button provisioned
 // Made with code from Daniel Shiffman + Danny Rozin, teaching me the future
 // Specifically blobs + PxPGet
+// Please contact calebfergie (calebfergie.com) with any questions)
 
+
+//---------------------------------------------------------------------------VARIABLE INITIALIZATION-------------------------------------------------------------------
 //Libriaries
 import processing.video.*;
 import ddf.minim.*;
@@ -95,9 +97,8 @@ int photoOp4 = 80000;
 //button variables and objs
 ArrayList<Button> buttons = new ArrayList<Button>();
 Button kidsModeButton = new Button(420, 450, 120, 50, "kidsMode", false, "Adult", "Kids");
-Button difficultyButton = new Button(660, 450, 120, 50, "difficulty", false, "Normal", "Hard");
+Button difficultyButton = new Button(660, 450, 120, 50, "difficulty", false, "Normal", "Hard"); //not used
 Button tutorialButton = new Button(910, 450, 120, 50, "tutorial", true, "Off", "On");
-//Button finColorButton = new Button(420,500,120,50,"finColor",false,"Red","Blue");
 
 //Game scoring variables and objs
 int leftGrade, rightGrade;
@@ -115,13 +116,6 @@ ArrayList<Blob> blobs = new ArrayList<Blob>();
 int R, G, B, A;
 int realX; //the non-flipped X value for making the targets with a mirror display
 float greenScreenThreshold = 175;
-//int finColorRed = 255;
-//int finColorGreen = 0;
-//int finColorBlue = 0;
-//int wallColorRed = 0;
-//int wallColorGreen = 255;
-//int wallColorBlue = 0;
-//or 219, 205, 125 for my walls at home lol -- removed beause it was influencing performance
 
 //greenscreen
 PImage secondImage;
@@ -132,6 +126,8 @@ PFont font1;
 PFont font1small;
 PFont font1med;
 PFont font1big;
+
+//---------------------------------------------------------------------------SKETCH SETUP-----------------------------------------------------------------------------
 
 void setup() {
   size(1200, 900, P3D); //only likes really clean 4:3 multipes
@@ -167,72 +163,14 @@ void setup() {
   buttons.add(kidsModeButton);
   buttons.add(difficultyButton);
   buttons.add(tutorialButton);
-  //buttons.add(finColorButton);
+  //buttons.add(finColorButton); //see? noy used
 }
 
-//threshold controls and interactive
-void keyPressed() {
-  if (key == 'a') {
-    distThreshold+=5;
-  }//increase of how fine the blob is
-  else if (key == 's') {
-    distThreshold-=5;
-  }//decrease how fine the blob is
-  if (key == 'z') { 
-    threshold+=5;
-  } //increase how easily any pixel is blobbed up
-  else if (key == 'x') {
-    threshold-=5;
-  } //increase how easily any pixel is blobbed up
-  else if (key == 'o') {
-    devMode = !devMode;
-  } //toggle "developer mode" to see backend stats
-  else if (key == 'q') {
-    greenScreenThreshold-=3;
-  } //increase how easily any pixel is greenscreened
-  else if (key == 'w') {
-    greenScreenThreshold+=3;
-  } //increase how easily any pixel is greenscreened
-  else if (key == 'p') {
-    
-    snapPic();
-  } //snap a pic ;)
-  
-  else if (key == 'k'){
-  kidsModeButton.status = !kidsModeButton.status;
-  //toggle kids mode in case button doesnt work
-  }
-
-  else if (keyCode == ENTER) {
-    //set the appropriate timers to the current time
-    if (screenSection == 0) {
-      tutorialVideo.pause();
-      tutorialVideo.jump(0);
-      tutTimer = m;
-    } 
-    
-    if (screenSection == 1) {
-      rightTimer = m;
-      leftTimer = m;
-      danceTimer = m;
-    }
-    if (screenSection == 3) {
-      screenSection =0;
-    } else {
-      screenSection++;
-    }
-  }
-}
-
-void snapPic() {
-  println("snapping a pic");
-  saveFrame("screenshots/left-shark-######.jpg");
-}
-
+//---------------------------------------------------------------------------DRAW LOOP---------------------------------------------------------------------------------
 
 void draw() {
   m = millis(); //a milli a milli a a a a milli (timing)
-  if (screenSection == 0) {//show the intro scene, play the intro music
+  if (screenSection == 0) { //show the intro scene, play the intro music
     runIntro();
     if (mousePressed) {
       checkForInteraction();
@@ -264,28 +202,16 @@ void draw() {
   if (devMode == true) {
     overlay();
   }
-} //end draw
-
-
-void overlay() {
-  for (Blob b : blobs) {
-    b.show();
-  }
-  fill(0, 0, 0, 255);
-  textAlign(LEFT);
-  fill(255);
-  text("distance threshold: " + distThreshold, 10, 25);
-  text("color threshold: " + threshold, 10, 50);  
-  text("green screen threshold: " + greenScreenThreshold, 10, 75);
-  text("framerate: " + frameRate, 10, 100);
 }
 
-void runIntro() {
+//---------------------------------------------------------------------------MAIN FUNCTIONS----------------------------------------------------------------------------
+// runIntro, runTutorial, runGame, runGameOver
+
+void runIntro() { //function that loops during the intro section
   resetGame();
   if (m >= 500 && !introSong.isPlaying()) {
     introSong.play(0);
   } //wait half a second before playing the song
-
   // load the screen pixels
   if (video.available()) video.read();
   image(introImage, 0, 0);   
@@ -294,7 +220,7 @@ void runIntro() {
   for (int x = 0; x < video.width; x++ ) {
     realX = width - x; // re-define a "real X" that has an origin of 0,0
     for (int y = 0; y < video.height; y++ ) {
-      PxPGetPixel(x, y, video.pixels, width);        // get the RGB of the live video (          int loc = x + y * video.width;  color currentColor = video.pixels[loc];
+      PxPGetPixel(x, y, video.pixels, width);        // get the RGB of the live video - replacing int loc = x + y * video.width;  color currentColor = video.pixels[loc];
       float gd = distSq(R, G, B, 0, 255, 0); //hardcoded GREEN or wall color
       if (gd > sq(greenScreenThreshold)) {
         PxPSetPixel(realX-1, y, R, G, B, 255, pixels, width); //loads the pixels of the second image or video
@@ -310,7 +236,6 @@ void runIntro() {
   strokeJoin(ROUND);
   rect(width/2, 400, 850, 600);
   strokeWeight(0);
-  //filter(BLUR, 6);
   fill(gradeColors[3]);
   text("REVENGE OF LEFT SHARK", width/2, height/2 - 300);
   textFont(font1small);
@@ -334,7 +259,7 @@ void runIntro() {
   textFont(font1);
 }
 
-void runTutorial() {
+void runTutorial() { //function that loops during the tutorial section
   if (m - tutTimer >= 18000) { //pause the tutorial and move on after 1.5 minutes
     tutorialVideo.pause();
     rightTimer = m;
@@ -342,7 +267,6 @@ void runTutorial() {
     danceTimer = m;
     screenSection=2;
   }
-
   // load the screen pixels
   if (video.available()) video.read();
   image(introImage, 0, 0);   
@@ -351,7 +275,7 @@ void runTutorial() {
   for (int x = 0; x < video.width; x++ ) {
     realX = width - x; // re-define a "real X" that has an origin of 0,0
     for (int y = 0; y < video.height; y++ ) {
-      PxPGetPixel(x, y, video.pixels, width);        // get the RGB of the live video (          int loc = x + y * video.width;  color currentColor = video.pixels[loc];
+      PxPGetPixel(x, y, video.pixels, width);        // get the RGB of the live video replacing int loc = x + y * video.width;  color currentColor = video.pixels[loc];
       float gd = distSq(R, G, B, 0, 255, 0); //hardcoded GREEN or wall color
       if (gd > sq(greenScreenThreshold)) {
         PxPSetPixel(realX-1, y, R, G, B, 255, pixels, width); //loads the pixels of the second image or video
@@ -378,7 +302,7 @@ void runTutorial() {
   image(tutorialVideo, 350, 250, 480, 270);
 }
 
-void runGame() {
+void runGame() { //function that loops during the game section
   // declaration of settings from intro session
   if (kidsModeButton.status == true) {
     leftRoutines = kidLeftRoutines; //use the kid-sized choreography
@@ -391,18 +315,9 @@ void runGame() {
   if (difficultyButton.status == true) {
     tpb = tpb / 2; //double the pace - currently impossble lol
   }
-  //if (finColorButton.status == true) {
-  //  //finColorRed = 0;
-  //  //finColorGreen = 0;
-  //  //finColorBlue = 255;
-  //} else if (finColorButton.status == false) {
-  //  //finColorRed = 255;
-  //  //finColorGreen = 0;
-  //  //finColorBlue = 0;
-  //}
 
 
-  //duration and timing checks and controls =
+  //duration and timing checks and controls
   if (danceM >= 5000 && updateStatus==false) { //update status workaround. may not be necessary
     rightTimer = rightTimer + (tpb/2);
     updateStatus = true;
@@ -415,27 +330,23 @@ void runGame() {
     song.pause();
     screenSection=3;
   }
-
+  //Photo opportunities!
   if (danceM - danceTimer >= photoOp1 && Op1 == false) {
     snapPic();
     Op1 = true;
   }
-
   if (danceM - danceTimer >= photoOp2 && Op2 == false) {
     snapPic();
     Op2 = true;
   }
-
   if (danceM - danceTimer >= photoOp3 && Op3 == false) {
     snapPic();
     Op3 = true;
   }
-
   if (danceM - danceTimer >= photoOp4 && Op4 == false) {
     snapPic();
     Op4 = true;
   }
-
   // load the screen pixels
   if (video.available()) video.read();
   image(secondImage, 0, 0);   
@@ -494,16 +405,13 @@ void runGame() {
       }
     }
   }
-
   updatePixels();
-
   // MORE BLOB STUFF
   for (int i = currentBlobs.size()-1; i >= 0; i--) {
     if (currentBlobs.get(i).size() < 500) {
       currentBlobs.remove(i);
     }
   }
-
   // There are no blobs!
   if (blobs.isEmpty() && currentBlobs.size() > 0) {
     //println("Adding blobs!");
@@ -599,16 +507,8 @@ void runGame() {
   textAnimation(); //Control the target's alpha and text values that appear on the screen
 }
 
-void checkForInteraction() {
-  for (Button b : buttons) {
-    if (b.inRange(mouseX, mouseY)) {
-      b.status = !b.status;
-    }
-  }
-}
 
-void runGameOver() {
-  //background(); need to fill the background with something
+void runGameOver() { //function that loops after the game ends
   textAlign(CENTER, CENTER);
   textFont(font1big);
   liveGame = true;
@@ -638,6 +538,89 @@ void runGameOver() {
   text(salutationList[salutation], width/2, 225);
   text("You had an average score of: "+avgScore+" out of 4", width/2, 275);
 }
+
+
+//---------------------------------------------------------------------------SUB FUNCTIONS----------------------------------------------------------------------------
+// keyPressed, checkForInteraction, snapPic, overlay, triggerAnimation, textAnimation, tallyScore, resetGame
+
+
+//color threshold and interactive controls
+void keyPressed() {
+  if (key == 'a') {
+    distThreshold+=5;
+  }//increase of how fine the blob is
+  else if (key == 's') {
+    distThreshold-=5;
+  }//decrease how fine the blob is
+  if (key == 'z') { 
+    threshold+=5;
+  } //increase how easily any pixel is blobbed up
+  else if (key == 'x') {
+    threshold-=5;
+  } //increase how easily any pixel is blobbed up
+  else if (key == 'o') {
+    devMode = !devMode;
+  } //toggle "developer mode" to see backend stats
+  else if (key == 'q') {
+    greenScreenThreshold-=3;
+  } //increase how easily any pixel is greenscreened
+  else if (key == 'w') {
+    greenScreenThreshold+=3;
+  } //increase how easily any pixel is greenscreened
+  else if (key == 'p') {
+    snapPic(); // take a screeenshot
+  } else if (key == 'k') {
+    kidsModeButton.status = !kidsModeButton.status;
+    //toggle kids mode in case button is not working well doesnt work
+  } else if (keyCode == ENTER) {
+    //set the appropriate timers to the current time
+    if (screenSection == 0) {
+      tutorialVideo.pause();
+      tutorialVideo.jump(0);
+      tutTimer = m;
+    } 
+    if (screenSection == 1) {
+      rightTimer = m;
+      leftTimer = m;
+      danceTimer = m;
+    }
+    if (screenSection == 3) {
+      screenSection =0;
+    } else {
+      screenSection++;
+    }
+  }
+}
+
+//check if a button was trying to be clicked
+void checkForInteraction() {
+  for (Button b : buttons) {
+    if (b.inRange(mouseX, mouseY)) {
+      b.status = !b.status;
+    }
+  }
+}
+
+//take a picture of the current frame
+void snapPic() {
+  println("snapping a pic");
+  saveFrame("screenshots/left-shark-######.jpg");
+}
+
+//debugging/developer overlay (press the "o" key to toggle it on/off)
+void overlay() {
+  for (Blob b : blobs) {
+    b.show();
+  }
+  fill(0, 0, 0, 255);
+  textAlign(LEFT);
+  fill(255);
+  text("distance threshold: " + distThreshold, 10, 25);
+  text("color threshold: " + threshold, 10, 50);  
+  text("green screen threshold: " + greenScreenThreshold, 10, 75);
+  text("framerate: " + frameRate, 10, 100);
+}
+
 
 void triggerAnimation() {
 
@@ -687,6 +670,7 @@ void triggerAnimation() {
   };
 }
 
+//function to make the animated text appear after an event
 void textAnimation() {
   //text animation
   textAlign(RIGHT);
@@ -710,6 +694,7 @@ void textAnimation() {
   }
 }
 
+//function to calculate the final grade
 void tallyScore() {
   if (tallyStatus == false) {
     for (Score part : score) {
@@ -735,6 +720,8 @@ void tallyScore() {
   tallyStatus = true;
 }
 
+
+// BIIIIG RESET of all variables
 void resetGame() {
   if (liveGame == true) {
     println("resetting game");
@@ -744,7 +731,6 @@ void resetGame() {
     // hide current targets 
     leftTarget.hide(); //hide it until the next beat and location
     rightTarget.hide(); //hide it until the next beat and location
-
     //reset all the vars
     section=0;
     sectionTimer=0;
@@ -779,7 +765,9 @@ void resetGame() {
   }
 };
 
-// MAJOR KEY functions from danny and schiffman
+//---------------------------------------------------------------------------MAJOR KEY functions from danny and schiffman----------------------------------------------
+
+// 
 
 float distSq(float x1, float y1, float x2, float y2) {
   float d = (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1);
@@ -810,8 +798,3 @@ void PxPSetPixel(int x, int y, int r, int g, int b, int a, int[] pixelArray, int
   color argb = a | r | g | b;        // binary "or" operation adds them all into one int
   pixelArray[x+y*pixelsWidth]= argb;    // finaly we set the int with te colors into the pixels[]
 }
-
-//// Called every time a new frame is available to read
-//void movieEvent(Movie m) {
-//  m.read();
-//}
