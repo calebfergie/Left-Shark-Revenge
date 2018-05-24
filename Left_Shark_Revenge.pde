@@ -1,4 +1,4 @@
-//LEFT SHARK REVENGE - red/blue fin added, button provisioned
+//LEFT SHARK REVENGE
 // Made with code from Daniel Shiffman + Danny Rozin, teaching me the future
 // Specifically blobs + PxPGet
 // Please contact calebfergie (calebfergie.com) with any questions)
