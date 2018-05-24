@@ -1,4 +1,4 @@
-# Left-Shark-Revenge
+# Revenge of Left Shark
 ## Code and file data related to Left Shark Revenge - DDR with your Hands
 
 ![](readme-data/left-shark-poster.jpg)
