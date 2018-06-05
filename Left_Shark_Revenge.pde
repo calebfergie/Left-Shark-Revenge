@@ -1,7 +1,7 @@
 //LEFT SHARK REVENGE
 // Made with code from Daniel Shiffman + Danny Rozin, teaching me the future
 // Specifically blobs + PxPGet
-// Please contact calebfergie (calebfergie.com) with any questions)
+// Please contact calebfergie (calebfergie.com) with any questions
 
 
 //---------------------------------------------------------------------------VARIABLE INITIALIZATION-------------------------------------------------------------------
@@ -557,7 +557,7 @@ void keyPressed() {
   } //increase how easily any pixel is blobbed up
   else if (key == 'x') {
     threshold-=5;
-  } //increase how easily any pixel is blobbed up
+  } //decrease how easily any pixel is blobbed up
   else if (key == 'o') {
     devMode = !devMode;
   } //toggle "developer mode" to see backend stats
@@ -566,12 +566,12 @@ void keyPressed() {
   } //increase how easily any pixel is greenscreened
   else if (key == 'w') {
     greenScreenThreshold+=3;
-  } //increase how easily any pixel is greenscreened
+  } //decrease how easily any pixel is greenscreened
   else if (key == 'p') {
     snapPic(); // take a screeenshot
   } else if (key == 'k') {
     kidsModeButton.status = !kidsModeButton.status;
-    //toggle kids mode in case button is not working well doesnt work
+    //toggle kids mode in case button is not working well
   } else if (keyCode == ENTER) {
     //set the appropriate timers to the current time
     if (screenSection == 0) {
