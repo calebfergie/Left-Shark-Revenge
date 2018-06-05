@@ -20,19 +20,27 @@ The game is broken into four sections, which can be **cycled through at any time
 
 #### 1. Introduction
 
-![](readme-data/section-1.jpg) The opening screen with game options and introductory text.
+![](readme-data/section-1.jpg)
+
+The opening screen with game options and introductory text.
 
 #### 2. Tutorial
 
-![](readme-data/section-2.jpg) An 18-second tutorial video that will run and automatically advance to the next section when complete.
+![](readme-data/section-2.jpg)
+
+An 18-second tutorial video that will run and automatically advance to the next section when complete.
 
 #### 3. Game
 
-![](readme-data/section-3.jpg) The actual game, which lasts about 1 minute and 30 seconds.
+![](readme-data/section-3.jpg)
+
+The actual game, which lasts about 1 minute and 30 seconds, and automatically advances to the next section when complete.
 
 #### 4. Results
 
-![](readme-data/section-4.jpg) The stats from the most recent game played, which will display until a user presses ENTER, which resets the game.
+![](readme-data/section-4.jpg)
+
+The stats from the most recent game played, which will display until a user presses ENTER, which resets the game.
 
 ### Developer interface and controls
 
