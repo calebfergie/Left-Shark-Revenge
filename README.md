@@ -1,9 +1,9 @@
 # Revenge of Left Shark
 ## Code and file data related to Left Shark's Revenge - DDR with your hands
 
-![](readme-data/left-shark-poster.jpg =450x)
-
 Revenge of Left Shark is an interactive rhythm and dance game. In other words, DDR with your hands. The game uses computer vision to place the player on the beach, supply visual cues and provide real-time scoring information.
+
+![](readme-data/left-shark-poster.jpg)
 
 This project was created in Spring 2018, and demo'd live at the [2018 ITP Spring Show](https://itp.nyu.edu/shows/spring2018/) with a full green screen and projector setup.
 
