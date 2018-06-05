@@ -1,4 +1,4 @@
-# Revenge of Left Shark - DDR with your hands
+# [Revenge of Left Shark](http://www.blog.calebfergie.com/2018/05/02/revenge-of-left-shark/) - DDR with your hands
 
 Revenge of Left Shark is an interactive rhythm and dance game. In other words, DDR with your hands. The game uses computer vision to place the player on the beach, supply visual cues and provide real-time scoring information.
 
@@ -8,11 +8,13 @@ This project was created in Spring 2018, and demo'd live at the [2018 ITP Spring
 
 ![](readme-data/greenscreen-1.jpg)
 
-More details about it can be found [here](http://www.blog.calebfergie.com/2018/05/02/revenge-of-left-shark/).
 
-## Notes about this repository
+
+# Notes about this repository
 
 If you really do download and try to use this program, don't hesitate to [reach out](mailto:ccf264@nyu.edu) with issues or questions. Or just raise an issue here on GitHub!
+
+More details about this game can also be found [here](http://www.blog.calebfergie.com/2018/05/02/revenge-of-left-shark/).
 
 ### Game sections
 
@@ -60,6 +62,6 @@ To change the background color that will be turned into a beach screen, just sea
 
 To change the fin color the program is searching for, search for "harcoded fin color" comments in the .pde file, and do the same replacement with the colors of the "fins" you want to use. This only needs to be done in one place.
 
-#### Final notes
+### Final notes
 
 The game takes a screenshot of the enviroment at 4 times during the game, as defined by the *'photoOp'* variables. You can change these values, and **also take a screenshot at any time by pressing the 'p' key**.
